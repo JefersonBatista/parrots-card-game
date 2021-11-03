@@ -47,6 +47,11 @@ h1 {
   border: 1px solid #99cea8;
 }
 
+.card img {
+  width: 100px;
+  height: 100px;
+}
+
 @media (max-width: 450px) {
   header {
     padding: 20px;
