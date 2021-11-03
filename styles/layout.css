@@ -9,7 +9,7 @@ body {
 header {
   display: flex;
   justify-content: center;
-  padding: 40px 0 60px;
+  padding: 40px 20px 60px;
 }
 
 h1 {
@@ -35,7 +35,7 @@ h1 {
 }
 
 .card {
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 
@@ -45,4 +45,18 @@ h1 {
 
   background-color: #a7e9af;
   border: 1px solid #99cea8;
+}
+
+@media (max-width: 450px) {
+  header {
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  .card-row {
+    flex-direction: column;
+  }
 }
