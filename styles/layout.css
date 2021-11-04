@@ -35,6 +35,8 @@ h1 {
 }
 
 .card {
+  position: relative;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,11 +47,29 @@ h1 {
 
   background-color: #a7e9af;
   border: 1px solid #99cea8;
+
+  backface-visibility: hidden;
+  transition: all 0.5s;
+  transform-style: preserve-3d;
 }
 
-.card img {
+.card .face {
+  position: absolute;
+
   width: 100px;
   height: 100px;
+}
+
+.card .front-face {
+  transform: rotateY(180deg);
+}
+
+.card:hover .back-face {
+  transform: rotateY(-180deg);
+}
+
+.card:hover .front-face {
+  transform: rotateY(0deg);
 }
 
 @media (max-width: 450px) {
