@@ -20,10 +20,14 @@ function initialize_game() {
   // HTML code of each card
   function card_html(card_index) {
     return `
-    <div class="card">
-      <img class="face back-face" src="images/card-cover.png" alt="Card Cover" />
-      <img class="face front-face" src="images/${game_cards[card_index][0]}" alt="Card Image" />
-    </div>`;
+      <div class="card" onclick="flip_card(this)">
+        <div class="back face">
+          <img src="images/card-cover.png" alt="Card Cover" />
+        </div>
+        <div class="front face">
+          <img src="images/${game_cards[card_index][0]}" alt="Card Image" />
+        </div>
+      </div>`;
   }
 
   function random_number_comparator(card_a, card_b) {
@@ -73,4 +77,8 @@ function initialize_game() {
     row_index += 1;
     card_index += 1;
   }
+}
+
+function flip_card(card) {
+  card.classList.toggle("flipped");
 }
