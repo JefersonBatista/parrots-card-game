@@ -1,4 +1,13 @@
+// Constants to access card info
+const label = 0;
+const random_number = 1;
+
+// Game controllers
+let flipped_card = null;
+let enable = true;
+
 initialize_game();
+// play_game();
 
 function initialize_game() {
   // Main prompt message
@@ -18,43 +27,43 @@ function initialize_game() {
   const num_pairs = num_cards / 2;
 
   // HTML code of each card
-  function card_html(card_index) {
+  function card_html(index) {
     return `
-      <div class="card" onclick="flip_card(this)">
+      <div class="card" onclick="choose_card(this)">
         <div class="back face">
           <img src="images/card-cover.png" alt="Card Cover" />
         </div>
         <div class="front face">
-          <img src="images/${game_cards[card_index][0]}" alt="Card Image" />
+          <img src="images/${game_cards[index][label]}.gif" alt="Card GIF" />
         </div>
+        <span class="label">${game_cards[index][label]}</span>
       </div>`;
   }
 
-  function random_number_comparator(card_a, card_b) {
-    return card_a[1] - card_b[1];
+  function random_number_comparator(card1, card2) {
+    return card1[random_number] - card2[random_number];
   }
 
   // Shuffling the cards
   const all_cards = [
-    ["bobrossparrot.gif", Math.random()],
-    ["bobrossparrot.gif", Math.random()],
-    ["explodyparrot.gif", Math.random()],
-    ["explodyparrot.gif", Math.random()],
-    ["fiestaparrot.gif", Math.random()],
-    ["fiestaparrot.gif", Math.random()],
-    ["metalparrot.gif", Math.random()],
-    ["metalparrot.gif", Math.random()],
-    ["revertitparrot.gif", Math.random()],
-    ["revertitparrot.gif", Math.random()],
-    ["tripletsparrot.gif", Math.random()],
-    ["tripletsparrot.gif", Math.random()],
-    ["unicornparrot.gif", Math.random()],
-    ["unicornparrot.gif", Math.random()],
+    ["bobrossparrot", Math.random()],
+    ["bobrossparrot", Math.random()],
+    ["explodyparrot", Math.random()],
+    ["explodyparrot", Math.random()],
+    ["fiestaparrot", Math.random()],
+    ["fiestaparrot", Math.random()],
+    ["metalparrot", Math.random()],
+    ["metalparrot", Math.random()],
+    ["revertitparrot", Math.random()],
+    ["revertitparrot", Math.random()],
+    ["tripletsparrot", Math.random()],
+    ["tripletsparrot", Math.random()],
+    ["unicornparrot", Math.random()],
+    ["unicornparrot", Math.random()],
   ];
 
   const game_cards = all_cards.slice(0, num_cards);
   game_cards.sort(random_number_comparator);
-  console.log(game_cards);
 
   let card_index = 0;
 
@@ -81,4 +90,37 @@ function initialize_game() {
 
 function flip_card(card) {
   card.classList.toggle("flipped");
+}
+
+function isCardFlipped(card) {
+  return card.classList.contains("flipped");
+}
+
+function choose_card(card) {
+  if (enable && !isCardFlipped(card)) {
+    flip_card(card);
+
+    // Is some card already flipped?
+    if (flipped_card) {
+      const label1 = flipped_card.querySelector(".label").innerHTML;
+      const label2 = card.querySelector(".label").innerHTML;
+      const match = label1 === label2;
+
+      // If cards don't match, they need to be flipped back 1s after
+      if (!match) {
+        enable = false;
+        setTimeout(flip_back, 1000, flipped_card, card);
+      }
+
+      flipped_card = null;
+    } else {
+      flipped_card = card;
+    }
+  }
+}
+
+function flip_back(card1, card2) {
+  flip_card(card1);
+  flip_card(card2);
+  enable = true;
 }

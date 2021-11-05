@@ -41,6 +41,10 @@ h1 {
   height: 146px;
 }
 
+.card .label {
+  display: none;
+}
+
 .card .face {
   position: absolute;
 
