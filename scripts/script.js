@@ -142,4 +142,10 @@ function flip_back(card1, card2) {
 
 function game_over() {
   alert(`Você ganhou em ${num_moves} jogadas!`);
+  const answer = prompt("Gostaria de reiniciar a partida?");
+  const restart = answer.toLowerCase();
+
+  if (restart === "s" || restart === "sim") {
+    initialize_game();
+  }
 }
