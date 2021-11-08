@@ -3,11 +3,13 @@ const label = 0;
 const random_number = 1;
 
 // Game controllers
-let flipped_card = null;
-let enable = true;
+let flipped_card;
+let enable;
+let num_moves;
+let num_pairs;
+let num_matches;
 
 initialize_game();
-// play_game();
 
 function initialize_game() {
   // Main prompt message
@@ -24,7 +26,7 @@ function initialize_game() {
   }
 
   // Number of pairs of the game
-  const num_pairs = num_cards / 2;
+  num_pairs = num_cards / 2;
 
   // HTML code of each card
   function card_html(index) {
@@ -86,6 +88,11 @@ function initialize_game() {
     row_index += 1;
     card_index += 1;
   }
+  
+  flipped_card = null;
+  enable = true;
+  num_moves = 0;
+  num_matches = 0;
 }
 
 function flip_card(card) {
@@ -98,6 +105,7 @@ function isCardFlipped(card) {
 
 function choose_card(card) {
   if (enable && !isCardFlipped(card)) {
+    num_moves += 1;
     flip_card(card);
 
     // Is some card already flipped?
@@ -110,6 +118,8 @@ function choose_card(card) {
       if (!match) {
         enable = false;
         setTimeout(flip_back, 1000, flipped_card, card);
+      } else {
+        num_matches += 1;
       }
 
       flipped_card = null;
@@ -117,10 +127,19 @@ function choose_card(card) {
       flipped_card = card;
     }
   }
+  
+  // Is the game over?
+  if (num_matches === num_pairs) {
+    setTimeout(game_over, 1);
+  }
 }
 
 function flip_back(card1, card2) {
   flip_card(card1);
   flip_card(card2);
   enable = true;
+}
+
+function game_over() {
+  alert(`Você ganhou em ${num_moves} jogadas!`);
 }
