@@ -31,11 +31,11 @@ function initialize_game() {
   // HTML code of each card
   function card_html(index) {
     return `
-      <div class="card" onclick="choose_card(this)">
-        <div class="back face">
+      <div class="card" data-identifier="card" onclick="choose_card(this)">
+        <div class="back face" data-identifier="back-face">
           <img src="images/card-cover.png" alt="Card Cover" />
         </div>
-        <div class="front face">
+        <div class="front face" data-identifier="front-face">
           <img src="images/${game_cards[index][label]}.gif" alt="Card GIF" />
         </div>
         <span class="label">${game_cards[index][label]}</span>
